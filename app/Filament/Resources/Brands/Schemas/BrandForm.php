@@ -35,7 +35,8 @@ class BrandForm
                     FileUpload::make('image')
                     ->image()
                     ->directory('brands')
-                    ->disk('cloudinary'),
+                    ->disk('cloudinary')
+                    ->fetchFileInformation(false),
                     Toggle::make('is_active')
                     ->default(true)
                     ->required()

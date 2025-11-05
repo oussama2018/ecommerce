@@ -35,7 +35,8 @@ class CategoryForm
                         FileUpload::make('image')
                         ->image()
                         ->directory('categories')
-                        ->disk('cloudinary'),
+                        ->disk('cloudinary')
+                        ->fetchFileInformation(false),
                          Toggle::make('is_active')
                         ->required()
                         ->default(true)
