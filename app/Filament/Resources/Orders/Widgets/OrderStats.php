@@ -14,9 +14,7 @@ class OrderStats extends StatsOverviewWidget
         return [
             Stat::make('New Orders',Order::query()->where('status','new')->count()),
             Stat::make('Order Processing', Order::query()->where('status','processing')->count()),
-            Stat::make(
-    'Average Price',
-    '$' . number_format(Order::query()->avg('grand_total'), 2)
+            Stat::make('Average Price',   '$' . number_format(Order::query()->avg('grand_total'), 2)
 )
 
         ];
