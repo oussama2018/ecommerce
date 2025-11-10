@@ -23,7 +23,7 @@ public function user(){
     return $this->belongsTo(User::class);
 }
 public function items(){
-    $this->hasMany(OrderItem::class);
+   return $this->hasMany(OrderItem::class);
 }
 public function address(){
     return $this->hasOne(Address::class);

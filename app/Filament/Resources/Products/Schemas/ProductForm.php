@@ -37,6 +37,7 @@ class ProductForm
                         ->columnSpanFull()
                         ->fileAttachmentsDisk('cloudinary')
                         ->fileAttachmentsDirectory('products')
+
                     ])->columns(2),
                     Section::make('Images')->schema([
                         FileUpload::make('image')

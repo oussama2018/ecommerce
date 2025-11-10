@@ -2,10 +2,13 @@
 
 namespace App\Filament\Resources\Orders\Tables;
 
+use Filament\Actions\ActionGroup;
 use Filament\Actions\BulkActionGroup;
+use Filament\Actions\DeleteAction;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
 use Filament\Actions\ViewAction;
+use Filament\Tables\Columns\SelectColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 
@@ -15,25 +18,38 @@ class OrdersTable
     {
         return $table
             ->columns([
-                TextColumn::make('user_id')
-                    ->numeric()
-                    ->sortable(),
-                TextColumn::make('payment_status')
+                TextColumn::make('user.name')
+                    ->label('Customer')
+                    ->sortable()
                     ->searchable(),
-                TextColumn::make('currency')
-                    ->searchable(),
-                TextColumn::make('status')
-                    ->badge(),
-                TextColumn::make('shipping_method')
-                    ->searchable(),
-                TextColumn::make('shipping_amount')
-                    ->numeric()
-                    ->sortable(),
                 TextColumn::make('grand_total')
-                    ->numeric()
-                    ->sortable(),
+                ->label('Grand Total')
+                ->numeric()
+                ->money()
+                ->searchable(),
                 TextColumn::make('payment_method')
-                    ->searchable(),
+                ->searchable()
+                ->sortable(),
+                TextColumn::make('payment_status')
+                ->searchable()
+                ->sortable(),
+                TextColumn::make('currency')
+                ->sortable()
+                ->searchable(),
+                TextColumn::make('shipping_method')
+                ->searchable()
+                ->sortable(),
+                SelectColumn::make('status')
+                ->options([
+                    'new'=>'New',
+                    'processing'=>'Processing',
+                    'shipped'=>'Shipped',
+                    'delivered'=>'Delivered',
+                    'cancelled'=>'Cancelled',
+                ])
+                ->searchable()
+                ->sortable(),
+
                 TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
@@ -47,8 +63,11 @@ class OrdersTable
                 //
             ])
             ->recordActions([
+                ActionGroup::make([
                 ViewAction::make(),
                 EditAction::make(),
+                DeleteAction::make()
+                ])
             ])
             ->toolbarActions([
                 BulkActionGroup::make([

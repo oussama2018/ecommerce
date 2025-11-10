@@ -6,6 +6,7 @@ use App\Filament\Resources\Orders\Pages\CreateOrder;
 use App\Filament\Resources\Orders\Pages\EditOrder;
 use App\Filament\Resources\Orders\Pages\ListOrders;
 use App\Filament\Resources\Orders\Pages\ViewOrder;
+use App\Filament\Resources\Orders\RelationManagers\AddressRelationManager;
 use App\Filament\Resources\Orders\Schemas\OrderForm;
 use App\Filament\Resources\Orders\Schemas\OrderInfolist;
 use App\Filament\Resources\Orders\Tables\OrdersTable;
@@ -21,6 +22,8 @@ class OrderResource extends Resource
     protected static ?string $model = Order::class;
 
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedShoppingBag;
+
+    protected static ?int $navigationSort = 6;
 
     public static function form(Schema $schema): Schema
     {
@@ -40,8 +43,16 @@ class OrderResource extends Resource
     public static function getRelations(): array
     {
         return [
-            //
+            AddressRelationManager::class
         ];
+    }
+    public static function getNavigationBadge(): ?string
+    {
+        return static::getModel()::count();
+    }
+    public static function getNavigationBadgeColor(): string|array|null
+    {
+        return static::getModel()::count() >10 ? 'success':'danger';
     }
 
     public static function getPages(): array
